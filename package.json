@@ -1,0 +1,28 @@
+{
+  "name": "airtable-updater",
+  "version": "1.0.0",
+  "description": "Add Skills table in Airtable",
+  "main": "index.js",
+  "scripts": {
+    "create:skills": "node scripts/create_skills.js",
+    "update:chalenges": "node scripts/update_challenges.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pix-fr/airtable-updater.git"
+  },
+  "keywords": [
+    "pix",
+    "airtable"
+  ],
+  "author": "Jérémy Buget",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/pix-fr/airtable-updater/issues"
+  },
+  "homepage": "https://github.com/pix-fr/airtable-updater#readme",
+  "dependencies": {
+    "airtable": "^0.5.2",
+    "bluebird": "^3.5.1"
+  }
+}
