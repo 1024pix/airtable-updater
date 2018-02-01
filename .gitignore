@@ -60,3 +60,6 @@ typings/
 # JetBrains
 .idea
 *.iml
+
+# Apple Mac files
+.DS_Store

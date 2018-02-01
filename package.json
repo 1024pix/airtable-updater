@@ -23,6 +23,7 @@
   "homepage": "https://github.com/pix-fr/airtable-updater#readme",
   "dependencies": {
     "airtable": "^0.5.2",
-    "bluebird": "^3.5.1"
+    "bluebird": "^3.5.1",
+    "dotenv": "^5.0.0"
   }
 }
