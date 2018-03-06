@@ -5,7 +5,6 @@ require('dotenv').config();
 const createSkills = require('./lib/controllers/create_skills_20180131');
 const updateChallenges = require('./lib/controllers/update_challenges_20180131');
 const importSkillsClues = require('./lib/controllers/import_skill_clues_20180201');
-const importTutorialsSkills = require('./lib/controllers/import_tutorials_skills_20180301');
 
 // node index.js < create-skills | update-challenges | import-skill-clues >
 let commands = process.argv;
@@ -24,8 +23,6 @@ commands.forEach((command) => {
             return updateChallenges();
         case 'import-skill-clues':
             return importSkillsClues();
-        case 'import-tutorials-skills':
-            return importTutorialsSkills();
         default:
             console.error('Command not found')
     }
