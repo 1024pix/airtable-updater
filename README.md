@@ -3,7 +3,7 @@
 **1/** Récupérer les sources
 
 ```
-$ git clone git@github.com:pix-fr/airtable-updater.git
+$ git clone git@github.com:1024pix/airtable-updater.git
 ```
 
 **2/** Télécharger les dépendances NPM
