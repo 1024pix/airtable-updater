@@ -2,34 +2,84 @@
 
 require('dotenv').config();
 
-const createSkills = require('./lib/controllers/create_skills_20180131');
-const updateChallenges = require('./lib/controllers/update_challenges_20180131');
-const importSkillsClues = require('./lib/controllers/import_skill_clues_20180201');
-const importTutorialsSkills = require('./lib/controllers/import_tutorials_skills_20180301');
-const importTagsSkills = require('./lib/controllers/import_tags_skills_20180306');
+const environnements = {
+    production: "--prod",
+    integration: "--inte",
+    aval: "--aval",
+    maths: "--math",
+};
+
+const commandPaths = {
+    'create-skills': './lib/controllers/create_skills_20180131',
+    'update-challenges': './lib/controllers/update_challenges_20180131',
+    'import-skill-clues': './lib/controllers/import_skill_clues_20180201',
+    'import-tutorials-in-skills': './lib/controllers/import_tutorials_skills_20180301',
+    'import-tags-in-skills': './lib/controllers/import_tags_skills_20180306',
+    'import-additional-tutorials-in-skills': './lib/controllers/import_additional_tutorials_skills_20180307'
+};
 
 // node index.js < create-skills | update-challenges | import-skill-clues >
-let commands = process.argv;
-commands.splice(0, 2);
+let scriptArguments = process.argv;
+scriptArguments.splice(0, 2);
 
-if (commands.length > 1) {
-    console.error(`Too many commands specified. Expected 1 but got ${commands.length}.`);
+if (scriptArguments.length > 2) {
+    console.error(`Too many scriptArguments specified. Expected 1 but got ${scriptArguments.length}.`);
     process.exit(1);
 }
 
-commands.forEach((command) => {
-    switch (command) {
-        case 'create-skills':
-            return createSkills();
-        case 'update-challenges':
-            return updateChallenges();
-        case 'import-skill-clues':
-            return importSkillsClues();
-        case 'import-tutorials-in-skills':
-            return importTutorialsSkills();
-        case 'import-tags-in-skills':
-            return importTagsSkills();
-        default:
-            console.error('Command not found')
-    }
-});
+if (scriptArguments.length === 1) {
+    console.error(`please specify the environnement variable.`);
+    logEnvironnementPossibilities();
+    process.exit(1);
+}
+
+const commandArg = scriptArguments[0];
+const environnementArg = scriptArguments[1];
+
+const commandPath = commandPaths[commandArg];
+
+if (typeof commandPath === "undefined") {
+    console.error('Command not found');
+    logCommandPossibilities();
+    process.exit(1);
+}
+
+switch (environnementArg) {
+    case "--inte":
+        process.env.AIRTABLE_BASE_PIX = process.env.AIRTABLE_BASE_PIX_INTEGRATION;
+        break;
+    case '--prod':
+        process.env.AIRTABLE_BASE_PIX = process.env.AIRTABLE_BASE_PIX_PROD;
+        break;
+    case '--math':
+        process.env.AIRTABLE_BASE_PIX = process.env.AIRTABLE_BASE_PIX_MATHS;
+        break;
+    case '--aval':
+        process.env.AIRTABLE_BASE_PIX = process.env.AIRTABLE_BASE_PIX_AVAL;
+        break;
+    default:
+        console.error(`Environnement "${environnementArg}" not found`);
+        process.exit(1);
+}
+
+runCommand(commandPaths[commandArg]);
+
+function runCommand(commandPath) {
+    require(commandPath)();
+}
+
+function logCommandPossibilities() {
+    console.log('Possible commands are: ');
+
+    Object.keys(commands).forEach((command) => {
+        console.log(`  > "${command}"`);
+    });
+}
+
+function logEnvironnementPossibilities() {
+    console.log('Possible environnement variables are: ');
+
+    Object.entries(environnements).forEach(([environnement, argString]) => {
+        console.log(`  > for environnement ${environnement}, enter "${argString}"`);
+    });
+}
