@@ -18,7 +18,6 @@ const commandPaths = {
     'import-additional-tutorials-in-skills': './lib/controllers/import_additional_tutorials_skills_20180307'
 };
 
-// node index.js < create-skills | update-challenges | import-skill-clues >
 let scriptArguments = process.argv;
 scriptArguments.splice(0, 2);
 
@@ -71,7 +70,7 @@ function runCommand(commandPath) {
 function logCommandPossibilities() {
     console.log('Possible commands are: ');
 
-    Object.keys(commands).forEach((command) => {
+    Object.keys(commandPaths).forEach((command) => {
         console.log(`  > "${command}"`);
     });
 }
