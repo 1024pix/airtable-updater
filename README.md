@@ -28,12 +28,22 @@ AIRTABLE_BASE_TUTOS=<base_for_tutos>
 
 **4/** Préparer les bases Airtable en conséquence (cf. section plus loin)
 
-**5/** Exécuter les scripts
+**5/** Préciser l'environnement où les scripts sont joués
 
-  a) Alimentation de la table "Acquis"
+Il faut préciser en second argument de la commande l'environnement sur lequel les scripts sont joués.
+
+Pour :
+* La base Airtable de Production : --prod
+* La base Airtable d'intégration : --inte
+* La base Airtable Aval : --aval
+* La Base Airtable Pix Maths : --math
+
+**6/** Exécuter les scripts
+
+  a) Alimentation de la table "Acquis" en intégration
 
 ```
-$ node index.js create-skills 
+$ node index.js create-skills --inte
 ```
 
   b) Mise à jour de la table "Epreuves" avec les acquis venant de la table "Acquis"
@@ -46,5 +56,22 @@ $ node index.js update-challenges
   
 ```
 $ node index.js import-skill-clues 
+```
+
+  d) Import des "Tutoriels" dans le champs "Réponse à" de la table "Acquis"  
+
+```
+$ node index.js import-tutorials-in-skills 
+```
+  e) Import des "Tags" dans le champs "Tags" de la table "Acquis"  
+
+```
+$ node index.js import-tags-in-skills 
+```
+
+  f) Import des "Tutoriels" dans le champs "En Savoir Plus" de la table "Acquis"  
+
+```
+$ node index.js import-additional-tutorials-in-skills 
 ```
 
