@@ -2,7 +2,7 @@
 
 require('dotenv').config();
 
-const environnements = {
+const environments = {
     production: "--prod",
     integration: "--inte",
     aval: "--aval",
@@ -22,18 +22,21 @@ let scriptArguments = process.argv;
 scriptArguments.splice(0, 2);
 
 if (scriptArguments.length > 2) {
-    console.error(`Too many scriptArguments specified. Expected 1 but got ${scriptArguments.length}.`);
+    console.error(`Too many scriptArguments specified. Expected 2 but got ${scriptArguments.length}.`);
     process.exit(1);
 }
 
 if (scriptArguments.length === 1) {
-    console.error(`please specify the environnement variable.`);
+    console.error(`There is one arguments missing.`);
+    console.error(`Please specify the command first.`);
+    logCommandPossibilities();
+    console.error(`Please specify the environnement variable finally.`);
     logEnvironnementPossibilities();
     process.exit(1);
 }
 
 const commandArg = scriptArguments[0];
-const environnementArg = scriptArguments[1];
+const environmentArg = scriptArguments[1];
 
 const commandPath = commandPaths[commandArg];
 
@@ -43,7 +46,7 @@ if (typeof commandPath === "undefined") {
     process.exit(1);
 }
 
-switch (environnementArg) {
+switch (environmentArg) {
     case "--inte":
         process.env.AIRTABLE_BASE_PIX = process.env.AIRTABLE_BASE_PIX_INTEGRATION;
         break;
@@ -57,7 +60,7 @@ switch (environnementArg) {
         process.env.AIRTABLE_BASE_PIX = process.env.AIRTABLE_BASE_PIX_AVAL;
         break;
     default:
-        console.error(`Environnement "${environnementArg}" not found`);
+        console.error(`Environnement "${environmentArg}" not found`);
         process.exit(1);
 }
 
@@ -78,7 +81,7 @@ function logCommandPossibilities() {
 function logEnvironnementPossibilities() {
     console.log('Possible environnement variables are: ');
 
-    Object.entries(environnements).forEach(([environnement, argString]) => {
+    Object.entries(environments).forEach(([environnement, argString]) => {
         console.log(`  > for environnement ${environnement}, enter "${argString}"`);
     });
 }
